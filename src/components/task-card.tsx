@@ -161,7 +161,7 @@ export function TaskCard({ task, compact = false }: { task: Task; compact?: bool
                   ))}
                 </DropdownMenuRadioGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem variant="destructive" onSelect={() => setConfirmOpen(true)}>
+                <DropdownMenuItem className="text-destructive focus:text-destructive" onSelect={() => setConfirmOpen(true)}>
                   <Trash2 className="size-4" /> Delete
                 </DropdownMenuItem>
               </DropdownMenuContent>

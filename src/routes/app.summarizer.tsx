@@ -25,7 +25,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import { summarizeMeeting } from "@/lib/ai.functions";
-import { buildContext, uid, useStore } from "@/lib/store";
+import { uid, useStore } from "@/lib/store";
 import type { Meeting, MeetingSummary } from "@/lib/types";
 
 export const Route = createFileRoute("/app/summarizer")({
@@ -431,4 +431,3 @@ function BulletList({ items }: { items: string[] }) {
   );
 }
 
-export { buildContext };
