@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppPlannerRouteImport } from './routes/app.planner'
 import { Route as AppSummarizerRouteImport } from './routes/app.summarizer'
 
 const IndexRoute = IndexRouteImport.update({
@@ -29,6 +30,11 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppPlannerRoute = AppPlannerRouteImport.update({
+  id: '/planner',
+  path: '/planner',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppSummarizerRoute = AppSummarizerRouteImport.update({
   id: '/summarizer',
   path: '/summarizer',
@@ -38,11 +44,13 @@ const AppSummarizerRoute = AppSummarizerRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
+  '/app/planner': typeof AppPlannerRoute
   '/app/summarizer': typeof AppSummarizerRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/app/planner': typeof AppPlannerRoute
   '/app/summarizer': typeof AppSummarizerRoute
   '/app': typeof AppIndexRoute
 }
@@ -50,15 +58,16 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
+  '/app/planner': typeof AppPlannerRoute
   '/app/summarizer': typeof AppSummarizerRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/app' | '/app/summarizer' | '/app/'
+  fullPaths: '/' | '/app' | '/app/planner' | '/app/summarizer' | '/app/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/app/summarizer' | '/app'
-  id: '__root__' | '/' | '/app' | '/app/summarizer' | '/app/'
+  to: '/' | '/app/planner' | '/app/summarizer' | '/app'
+  id: '__root__' | '/' | '/app' | '/app/planner' | '/app/summarizer' | '/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -89,6 +98,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/planner': {
+      id: '/app/planner'
+      path: '/planner'
+      fullPath: '/app/planner'
+      preLoaderRoute: typeof AppPlannerRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/summarizer': {
       id: '/app/summarizer'
       path: '/summarizer'
@@ -100,11 +116,13 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppPlannerRoute: typeof AppPlannerRoute
   AppSummarizerRoute: typeof AppSummarizerRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppPlannerRoute: AppPlannerRoute,
   AppSummarizerRoute: AppSummarizerRoute,
   AppIndexRoute: AppIndexRoute,
 }
