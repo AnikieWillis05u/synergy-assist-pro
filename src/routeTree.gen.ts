@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppChatRouteImport } from './routes/app.chat'
 import { Route as AppPlannerRouteImport } from './routes/app.planner'
 import { Route as AppSummarizerRouteImport } from './routes/app.summarizer'
 
@@ -30,6 +31,11 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppChatRoute = AppChatRouteImport.update({
+  id: '/chat',
+  path: '/chat',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppPlannerRoute = AppPlannerRouteImport.update({
   id: '/planner',
   path: '/planner',
@@ -44,12 +50,14 @@ const AppSummarizerRoute = AppSummarizerRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
+  '/app/chat': typeof AppChatRoute
   '/app/planner': typeof AppPlannerRoute
   '/app/summarizer': typeof AppSummarizerRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/app/chat': typeof AppChatRoute
   '/app/planner': typeof AppPlannerRoute
   '/app/summarizer': typeof AppSummarizerRoute
   '/app': typeof AppIndexRoute
@@ -58,16 +66,25 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
+  '/app/chat': typeof AppChatRoute
   '/app/planner': typeof AppPlannerRoute
   '/app/summarizer': typeof AppSummarizerRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/app' | '/app/planner' | '/app/summarizer' | '/app/'
+  fullPaths:
+    '/' | '/app' | '/app/chat' | '/app/planner' | '/app/summarizer' | '/app/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/app/planner' | '/app/summarizer' | '/app'
-  id: '__root__' | '/' | '/app' | '/app/planner' | '/app/summarizer' | '/app/'
+  to: '/' | '/app/chat' | '/app/planner' | '/app/summarizer' | '/app'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/app/chat'
+    | '/app/planner'
+    | '/app/summarizer'
+    | '/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -98,6 +115,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/chat': {
+      id: '/app/chat'
+      path: '/chat'
+      fullPath: '/app/chat'
+      preLoaderRoute: typeof AppChatRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/planner': {
       id: '/app/planner'
       path: '/planner'
@@ -116,12 +140,14 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppChatRoute: typeof AppChatRoute
   AppPlannerRoute: typeof AppPlannerRoute
   AppSummarizerRoute: typeof AppSummarizerRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppChatRoute: AppChatRoute,
   AppPlannerRoute: AppPlannerRoute,
   AppSummarizerRoute: AppSummarizerRoute,
   AppIndexRoute: AppIndexRoute,
