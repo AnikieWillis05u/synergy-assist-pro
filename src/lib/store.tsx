@@ -36,7 +36,7 @@ const initialState: AppState = {
   tasks: demoTasks,
   meetings: demoMeetings,
   conversations: demoConversations,
-  activeConversationId: demoConversations[0].id,
+  activeConversationId: demoConversations[0]?.id ?? "c_1",
   notifications: demoNotifications,
   aiInteractions: 12,
 };
@@ -241,7 +241,7 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
           conversations: s.conversations.map((c) => {
             if (c.id !== id) return c;
             const messages = [...c.messages];
-            while (messages.length && messages[messages.length - 1].role === "assistant")
+            while (messages.length && messages[messages.length - 1]?.role === "assistant")
               messages.pop();
             return { ...c, messages };
           }),

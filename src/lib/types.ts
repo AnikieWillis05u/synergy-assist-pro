@@ -21,7 +21,7 @@ export interface Task {
   dependencies: string[];
   createdAt: string;
   completedAt: string | null;
-  source?: string;
+  source?: string | undefined;
 }
 
 export interface ActionItem {
@@ -30,7 +30,7 @@ export interface ActionItem {
   owner: string;
   deadline: string;
   priority: Priority;
-  converted?: boolean;
+  converted?: boolean | undefined;
 }
 
 export interface MeetingSummary {
